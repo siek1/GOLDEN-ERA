@@ -37,8 +37,10 @@ router.post("/create", async (req, res) => {
   try {
     const newProduct = await new Product({
       name: req.body.name,
+      slug: req.body.slug,
       description: req.body.description,
       price: req.body.price,
+      product_price: req.body.product_price,
       tabelMarimi: req.body.tabelMarimi,
     });
     const product = await newProduct.save();
@@ -116,100 +118,40 @@ router.put("/:id", async (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-router.get("/to-cart/:id/S", async (req, res) => {
+// router.get("/to-cart/:id/S", async (req, res) => {
+//   try {
+//     const product = await Product.findById(req.params.id);
+//     const newSaleProduct = {};
+
+//     newSaleProduct["_id"] = product._id;
+
+//     newSaleProduct["name"] = product.name;
+//     newSaleProduct["image"] = product.images[0];
+//     newSaleProduct["price"] = product.price;
+//     newSaleProduct["quantity"] = 0;
+//     newSaleProduct["size"] = "S";
+//     res
+//       .cookie(
+//         product.name + " " + newSaleProduct.size,
+//         JSON.stringify(newSaleProduct)
+//       )
+//       .json(newSaleProduct);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
+
+router.get("/to-cart/:id/:size", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     const newSaleProduct = {};
+    newSaleProduct["_id"] = product._id;
 
     newSaleProduct["name"] = product.name;
     newSaleProduct["image"] = product.images[0];
     newSaleProduct["price"] = product.price;
     newSaleProduct["quantity"] = 0;
-    newSaleProduct["size"] = "S";
-    res
-      .cookie(
-        product.name + " " + newSaleProduct.size,
-        JSON.stringify(newSaleProduct)
-      )
-      .json(newSaleProduct);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-router.get("/to-cart/:id/M", async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    const newSaleProduct = {};
-
-    newSaleProduct["name"] = product.name;
-    newSaleProduct["image"] = product.images[0];
-    newSaleProduct["price"] = product.price;
-    newSaleProduct["quantity"] = 0;
-    newSaleProduct["size"] = "M";
-    res
-      .cookie(
-        product.name + " " + newSaleProduct.size,
-        JSON.stringify(newSaleProduct)
-      )
-      .json(newSaleProduct);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-router.get("/to-cart/:id/L", async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    const newSaleProduct = {};
-
-    newSaleProduct["name"] = product.name;
-    newSaleProduct["image"] = product.images[0];
-    newSaleProduct["price"] = product.price;
-    newSaleProduct["quantity"] = 0;
-    newSaleProduct["size"] = "L";
-    res
-      .cookie(
-        product.name + " " + newSaleProduct.size,
-        JSON.stringify(newSaleProduct)
-      )
-      .json(newSaleProduct);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-router.get("/to-cart/:id/XL", async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    const newSaleProduct = {};
-
-    newSaleProduct["name"] = product.name;
-    newSaleProduct["image"] = product.images[0];
-    newSaleProduct["price"] = product.price;
-    newSaleProduct["quantity"] = 0;
-    newSaleProduct["size"] = "XL";
-    res
-      .cookie(
-        product.name + " " + newSaleProduct.size,
-        JSON.stringify(newSaleProduct)
-      )
-      .json(newSaleProduct);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-router.get("/to-cart/:id/XXL", async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    const newSaleProduct = {};
-
-    newSaleProduct["name"] = product.name;
-    newSaleProduct["image"] = product.images[0];
-    newSaleProduct["price"] = product.price;
-    newSaleProduct["quantity"] = 0;
-    newSaleProduct["size"] = "XXL";
+    newSaleProduct["size"] = req.params.size;
     res
       .cookie(
         product.name + " " + newSaleProduct.size,
@@ -229,30 +171,6 @@ router.get("/get-all/cookies", async (req, res) => {
   }
   // res.clearCookie("name");
 });
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-
-//   .o88b.  db   db  d88888b  .o88b.  db   dD   .d88b.   db    db  d888888b
-//  d8P  Y8  88   88  88'     d8P  Y8  88 ,8P'  .8P  Y8.  88    88  `~~88~~'
-//  8P       88ooo88  88ooooo 8P       88,8P    88    88  88    88     88
-//  8b       88~~~88  88~~~~~ 8b       88`8b    88    88  88    88     88
-//  Y8b  d8  88   88  88.     Y8b  d8  88 `88.  `8b  d8'  88b  d88     88
-//   `Y88P'  YP   YP  Y88888P  `Y88P'  YP   YD   `Y88P'   ~Y8888P'     YP
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-
-router.get("/submit/checkout", async (req, res) => {
-  
-});
-
-
-
-
-
 
 module.exports = router;
 

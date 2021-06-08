@@ -5,6 +5,7 @@ import Link from "next/link";
 const Cart = ({ cookies }) => {
   try {
     delete cookies["csrftoken"];
+    delete cookies["Order"];
   } catch (e) {
     // pass;
     console.log(e);
@@ -12,10 +13,11 @@ const Cart = ({ cookies }) => {
   var JSONarray = [];
 
   Object.keys(cookies).map((cookie) => {
-    console.log(cookie);
+    console.log(cookies[cookie]);
     JSONarray.push(JSON.parse(cookies[cookie]));
+    // JSONarray.push(cookies[cookie]);
   });
-
+  console.log(JSONarray);
   return (
     <div>
       {JSONarray.map((obj) => (
@@ -39,9 +41,17 @@ const Cart = ({ cookies }) => {
 };
 
 export const getServerSideProps = async (context) => {
-  const res = await fetch(`http://localhost:5000/api/products/get-all/cookies`);
+  const res = await fetch(
+    `http://localhost:5000/api/products/get-all/cookies`,
+    // headers,
+    {
+      "Content-Type": "application/json",
+    }
+  );
   // console.log(res);
+  // const data = await res.json();
   const data = await res.json();
+
   // console.log(data);
 
   const { req } = context;

@@ -7,7 +7,14 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 //
 
+// if (process.env.NODE_ENV !== "production") {
+// require("dotenv").load();
+// }
+
 const productRoute = require("./routes/products.js");
+const checkoutRoute = require("./routes/checkout.js");
+const orderRoute = require("./routes/orders.js");
+
 //
 
 const app = express();
@@ -35,6 +42,8 @@ app.use(cookieParser());
 //
 
 app.use("/api/products", productRoute);
+app.use("/api/checkout", checkoutRoute);
+app.use("/api/orders", orderRoute);
 
 //
 

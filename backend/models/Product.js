@@ -12,7 +12,10 @@ const ProductSchema = new mongoose.Schema({
   },
   slug: {
     type: String,
-    slug: "name",
+    require: true,
+    min: 3,
+    max: 50,
+    unique: true,
   },
   description: {
     type: String,
@@ -25,6 +28,10 @@ const ProductSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  product_price: {
+    type: String,
+    required: true,
+  },
   images: {
     type: Array,
     default: [],
@@ -33,12 +40,15 @@ const ProductSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
+  colors: {
+    type: Array,
+    default: [],
+  },
   tabelMarimi: {
     type: String,
     require: true,
     min: 3,
     max: 50,
-    unique: true,
   },
 });
 
